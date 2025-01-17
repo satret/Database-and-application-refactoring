@@ -7,11 +7,12 @@ from bot.handlers.list_transactions import list_transactions
 from bot.handlers.select_user import select_user, process_user_selection
 from bot.handlers.delete_transaction import delete_transaction
 from bot.handlers.delete_user import delete_user
+from bot.handlers.edit_transaction import edit_transaction
 from bot.constants import SELECTING_USER
 
 
 def main():
-    application = Application.builder().token("").build()
+    application = Application.builder().token("7528055067:AAEUHC5MVPBzsQhzB7B7OxL-edFPrVQheY8").build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help))
@@ -20,6 +21,7 @@ def main():
     application.add_handler(CommandHandler("list", list_transactions))
     application.add_handler(CommandHandler("delete", delete_transaction))
     application.add_handler(CommandHandler("delete_user", delete_user))
+    application.add_handler(CommandHandler("edit", edit_transaction))
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("select_user", select_user)],

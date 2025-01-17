@@ -1,4 +1,5 @@
 from bot.utils.database import execute_query
+from datetime import datetime
 
 
 async def add_transaction(update, context):
@@ -18,9 +19,11 @@ async def add_transaction(update, context):
         category = args[1]
         type_ = args[2]
 
+        current_date = datetime.now()
+
         execute_query(
-            "INSERT INTO transactions (user_id, amount, category, type) VALUES (%s, %s, %s, %s)",
-            (selected_user, amount, category, type_)
+            "INSERT INTO transactions (user_id, amount, category, type, date) VALUES (%s, %s, %s, %s, %s)",
+            (selected_user, amount, category, type_, current_date)
         )
 
         await update.message.reply_text(f"Транзакция добавлена: {amount} {category} ({type_})")

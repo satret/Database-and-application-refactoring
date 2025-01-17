@@ -1,6 +1,5 @@
 from bot.utils.database import execute_query
 
-
 async def list_transactions(update, context):
     try:
         selected_user = context.user_data.get('selected_user')
@@ -9,16 +8,23 @@ async def list_transactions(update, context):
             return
 
         transactions = execute_query(
-            "SELECT * FROM transactions WHERE user_id = %s",
+            "SELECT id, amount, category, type, date FROM transactions WHERE user_id = %s ORDER BY id ASC",
             (selected_user,),
             fetchall=True
         )
 
         if transactions:
-            response = "Ваши транзакции:\n"
+            response = "📝 *Ваши транзакции:*\n\n"
             for transaction in transactions:
-                response += f"{transaction[2]} {transaction[3]} ({transaction[4]}) - {transaction[5]}\n"
-            await update.message.reply_text(response)
+                response += (
+                    f"🆔 *ID:* {transaction[0]}\n"
+                    f"💵 *Сумма:* {transaction[1]}\n"
+                    f"🏷 *Категория:* {transaction[2]}\n"
+                    f"📌 *Тип:* {transaction[3]}\n"
+                    f"📅 *Дата:* {transaction[4]}\n"
+                    "————————————\n"
+                )
+            await update.message.reply_text(response, parse_mode="Markdown")
         else:
             await update.message.reply_text("У вас пока нет транзакций.")
     except Exception as e:
