@@ -9,10 +9,11 @@ from bot.handlers.delete_transaction import delete_transaction
 from bot.handlers.delete_user import delete_user
 from bot.handlers.edit_transaction import edit_transaction
 from bot.constants import SELECTING_USER
+from config.config import Config
 
 
 def main():
-    application = Application.builder().token("7528055067:AAEUHC5MVPBzsQhzB7B7OxL-edFPrVQheY8").build()
+    application = Application.builder().token(Config.TELEGRAM_BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help))
