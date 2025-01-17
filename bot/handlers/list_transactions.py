@@ -1,16 +1,13 @@
-# bot/handlers/list_transactions.py
-
 from bot.utils.database import execute_query
+
 
 async def list_transactions(update, context):
     try:
-        # Получаем выбранного пользователя из user_data
         selected_user = context.user_data.get('selected_user')
         if selected_user is None:
             await update.message.reply_text("Ошибка: выберите пользователя с помощью /select_user.")
             return
 
-        # Получаем список транзакций для выбранного пользователя
         transactions = execute_query(
             "SELECT * FROM transactions WHERE user_id = %s",
             (selected_user,),
