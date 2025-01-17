@@ -1,6 +1,5 @@
-# bot/handlers/stats.py
-
 from bot.utils.database import execute_query
+
 
 async def stats(update, context):
     try:
@@ -9,7 +8,6 @@ async def stats(update, context):
             await update.message.reply_text("Ошибка: выберите пользователя с помощью /select_user.")
             return
 
-        # Получаем общую сумму доходов и расходов
         total_income = execute_query(
             "SELECT COALESCE(SUM(amount), 0) FROM transactions WHERE user_id = %s AND type = 'доход'",
             (selected_user,),
@@ -22,14 +20,12 @@ async def stats(update, context):
             fetchone=True
         )[0]
 
-        # Получаем распределение по категориям
         categories = execute_query(
             "SELECT category, SUM(amount) FROM transactions WHERE user_id = %s GROUP BY category",
             (selected_user,),
             fetchall=True
         )
 
-        # Формируем ответ
         response = (
             "📊 *Статистика:*\n\n"
             f"💵 *Общий доход:* {total_income:.2f}\n"
