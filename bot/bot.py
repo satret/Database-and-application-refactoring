@@ -8,6 +8,7 @@ from bot.handlers.select_user import select_user, process_user_selection
 from bot.handlers.delete_transaction import delete_transaction
 from bot.handlers.delete_user import delete_user
 from bot.handlers.edit_transaction import edit_transaction
+from bot.handlers.stats import stats
 from bot.constants import SELECTING_USER
 from config.config import Config
 
@@ -23,6 +24,7 @@ def main():
     application.add_handler(CommandHandler("delete", delete_transaction))
     application.add_handler(CommandHandler("delete_user", delete_user))
     application.add_handler(CommandHandler("edit", edit_transaction))
+    application.add_handler(CommandHandler("stats", stats))
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("select_user", select_user)],
