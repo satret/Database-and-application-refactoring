@@ -10,6 +10,7 @@ from bot.handlers.delete_user import delete_user
 from bot.handlers.edit_transaction import edit_transaction
 from bot.handlers.stats import stats
 from bot.handlers.set_budget import set_budget
+from bot.handlers.make_admin import make_admin
 from bot.constants import SELECTING_USER
 from config.config import Config
 
@@ -27,6 +28,7 @@ def main():
     application.add_handler(CommandHandler("edit", edit_transaction))
     application.add_handler(CommandHandler("stats", stats))
     application.add_handler(CommandHandler("set_budget", set_budget))
+    application.add_handler(CommandHandler("make_admin", make_admin))
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("select_user", select_user)],
